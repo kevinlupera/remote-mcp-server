@@ -3,6 +3,7 @@ import { McpAgent } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import OAuthProvider from "@cloudflare/workers-oauth-provider";
+import { env } from "cloudflare:workers";
 
 export class MyMCP extends McpAgent {
 	server = new McpServer({
@@ -28,4 +29,6 @@ export default new OAuthProvider({
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
+	// Canonical public URL of the MCP endpoint, e.g. https://<worker>.<account>.workers.dev/sse
+	resourceMetadata: { resource: env.MCP_RESOURCE_URL },
 });
