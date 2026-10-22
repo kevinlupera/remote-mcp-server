@@ -12,6 +12,9 @@ git clone git@github.com:cloudflare/ai.git
 cd ai
 npm install
 
+# set the canonical MCP resource URL for local development
+echo 'MCP_RESOURCE_URL=http://localhost:8787/sse' > .dev.vars
+
 # run locally
 npx nx dev remote-mcp-server
 ```
@@ -71,7 +74,8 @@ When you open Claude a browser window should open and allow you to login. You sh
 
 1. `npx wrangler kv namespace create OAUTH_KV`
 2. Follow the guidance to add the kv namespace ID to `wrangler.jsonc`
-3. `npm run deploy`
+3. Set `MCP_RESOURCE_URL` to the public URL of your MCP endpoint (e.g. `https://worker-name.account-name.workers.dev/sse`), either in `vars` in `wrangler.jsonc` or in the Cloudflare dashboard. The Worker fails to start without it.
+4. `npm run deploy`
 
 ## Call your newly deployed remote MCP server from a remote MCP client
 
